@@ -63,6 +63,7 @@
     <Build Include="Tables\Product.sql" />
     <Build Include="Tables\Stock.sql" />
     <Build Include="Tables\Sale.sql" />
+    <Build Include="Tables\SaleItem.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment1.sql" />
