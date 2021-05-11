@@ -21,8 +21,8 @@ MERGE INTO [Employee] AS Target USING (
 AS Source ([EmployeeId], [Username], [FirstName], [LastName], [Password])
 ON Target.EmployeeId = Source.EmployeeId
 WHEN NOT MATCHED BY TARGET THEN
-INSERT ([EmployeeId], [Username], [FirstName], [LastName], [Password])
-VALUES ([EmployeeId], [Username], [FirstName], [LastName], [Password]); 
+INSERT ([Username], [FirstName], [LastName], [Password])
+VALUES ([Username], [FirstName], [LastName], [Password]); 
 
 MERGE INTO [Product] AS Target USING (
    VALUES
@@ -35,8 +35,8 @@ MERGE INTO [Product] AS Target USING (
 AS Source ([ProductId], [ProductName])
 ON Target.ProductId = Source.ProductId
 WHEN NOT MATCHED BY TARGET THEN
-INSERT ([ProductId], [ProductName])
-VALUES ([ProductId], [ProductName]);
+INSERT ([ProductName])
+VALUES ([ProductName]);
 
 MERGE INTO [Stock] AS Target USING (
    VALUES
@@ -49,7 +49,7 @@ MERGE INTO [Stock] AS Target USING (
 AS Source ([StockId], [ProductId] )
 ON Target.StockId = Source.StockId
 WHEN NOT MATCHED  BY TARGET THEN
-INSERT ([StockId], [ProductId])
-VALUES ([StockId], [ProductId]);
+INSERT ([ProductId])
+VALUES ([ProductId]);
 
 END;
