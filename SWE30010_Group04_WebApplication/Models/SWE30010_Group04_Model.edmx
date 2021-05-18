@@ -21,6 +21,7 @@
           </Key>
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -28,14 +29,7 @@
           </Key>
           <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SaleItem">
-          <Key>
-            <PropertyRef Name="SaleItemId" />
-          </Key>
-          <Property Name="SaleItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SaleId" Type="int" Nullable="false" />
-          <Property Name="StockId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -43,6 +37,7 @@
           </Key>
           <Property Name="StockId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="SaleId" Type="int" />
         </EntityType>
         <Association Name="FK_Sale_EmployeeId">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -56,27 +51,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SaleItem_SaleId">
-          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
-          <End Role="SaleItem" Type="Self.SaleItem" Multiplicity="*" />
+        <Association Name="FK_Sale_SaleId">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="0..1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sale">
               <PropertyRef Name="SaleId" />
             </Principal>
-            <Dependent Role="SaleItem">
+            <Dependent Role="Stock">
               <PropertyRef Name="SaleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SaleItem_StockId">
-          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
-          <End Role="SaleItem" Type="Self.SaleItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stock">
-              <PropertyRef Name="StockId" />
-            </Principal>
-            <Dependent Role="SaleItem">
-              <PropertyRef Name="StockId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -96,19 +79,14 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SaleItem" EntityType="Self.SaleItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Sale_EmployeeId" Association="Self.FK_Sale_EmployeeId">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
-          <AssociationSet Name="FK_SaleItem_SaleId" Association="Self.FK_SaleItem_SaleId">
+          <AssociationSet Name="FK_Sale_SaleId" Association="Self.FK_Sale_SaleId">
             <End Role="Sale" EntitySet="Sale" />
-            <End Role="SaleItem" EntitySet="SaleItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SaleItem_StockId" Association="Self.FK_SaleItem_StockId">
             <End Role="Stock" EntitySet="Stock" />
-            <End Role="SaleItem" EntitySet="SaleItem" />
           </AssociationSet>
           <AssociationSet Name="FK_Stock_ProductId" Association="Self.FK_Stock_ProductId">
             <End Role="Product" EntitySet="Product" />
@@ -137,6 +115,7 @@
           </Key>
           <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Stocks" Relationship="Self.FK_Stock_ProductId" FromRole="Product" ToRole="Stock" />
         </EntityType>
         <EntityType Name="Sale">
@@ -145,18 +124,9 @@
           </Key>
           <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Sale_EmployeeId" FromRole="Sale" ToRole="Employee" />
-          <NavigationProperty Name="SaleItems" Relationship="Self.FK_SaleItem_SaleId" FromRole="Sale" ToRole="SaleItem" />
-        </EntityType>
-        <EntityType Name="SaleItem">
-          <Key>
-            <PropertyRef Name="SaleItemId" />
-          </Key>
-          <Property Name="SaleItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SaleId" Type="Int32" Nullable="false" />
-          <Property Name="StockId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sale" Relationship="Self.FK_SaleItem_SaleId" FromRole="SaleItem" ToRole="Sale" />
-          <NavigationProperty Name="Stock" Relationship="Self.FK_SaleItem_StockId" FromRole="SaleItem" ToRole="Stock" />
+          <NavigationProperty Name="Stocks" Relationship="Self.FK_Sale_SaleId" FromRole="Sale" ToRole="Stock" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -164,8 +134,9 @@
           </Key>
           <Property Name="StockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="SaleId" Type="Int32" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Stock_ProductId" FromRole="Stock" ToRole="Product" />
-          <NavigationProperty Name="SaleItems" Relationship="Self.FK_SaleItem_StockId" FromRole="Stock" ToRole="SaleItem" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_SaleId" FromRole="Stock" ToRole="Sale" />
         </EntityType>
         <Association Name="FK_Sale_EmployeeId">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -191,35 +162,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SaleItem_SaleId">
-          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
-          <End Role="SaleItem" Type="Self.SaleItem" Multiplicity="*" />
+        <Association Name="FK_Sale_SaleId">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="0..1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sale">
               <PropertyRef Name="SaleId" />
             </Principal>
-            <Dependent Role="SaleItem">
+            <Dependent Role="Stock">
               <PropertyRef Name="SaleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SaleItem_StockId">
-          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
-          <End Role="SaleItem" Type="Self.SaleItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stock">
-              <PropertyRef Name="StockId" />
-            </Principal>
-            <Dependent Role="SaleItem">
-              <PropertyRef Name="StockId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="SWE30010_Group04_DBEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SWE30010_Group04_DBEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
-          <EntitySet Name="SaleItems" EntityType="Self.SaleItem" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
           <AssociationSet Name="FK_Sale_EmployeeId" Association="Self.FK_Sale_EmployeeId">
             <End Role="Employee" EntitySet="Employees" />
@@ -229,13 +187,9 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Stock" EntitySet="Stocks" />
           </AssociationSet>
-          <AssociationSet Name="FK_SaleItem_SaleId" Association="Self.FK_SaleItem_SaleId">
+          <AssociationSet Name="FK_Sale_SaleId" Association="Self.FK_Sale_SaleId">
             <End Role="Sale" EntitySet="Sales" />
-            <End Role="SaleItem" EntitySet="SaleItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SaleItem_StockId" Association="Self.FK_SaleItem_StockId">
             <End Role="Stock" EntitySet="Stocks" />
-            <End Role="SaleItem" EntitySet="SaleItems" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -243,7 +197,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SWE30010_Group04_DBModelStoreContainer" CdmEntityContainer="SWE30010_Group04_DBEntities2">
+        <EntityContainerMapping StorageEntityContainer="SWE30010_Group04_DBModelStoreContainer" CdmEntityContainer="SWE30010_Group04_DBEntities4">
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="SWE30010_Group04_DBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -260,6 +214,7 @@
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -268,15 +223,7 @@
               <MappingFragment StoreEntitySet="Sale">
                 <ScalarProperty Name="SaleId" ColumnName="SaleId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SaleItems">
-            <EntityTypeMapping TypeName="SWE30010_Group04_DBModel.SaleItem">
-              <MappingFragment StoreEntitySet="SaleItem">
-                <ScalarProperty Name="SaleItemId" ColumnName="SaleItemId" />
-                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
-                <ScalarProperty Name="StockId" ColumnName="StockId" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -285,6 +232,7 @@
               <MappingFragment StoreEntitySet="Stock">
                 <ScalarProperty Name="StockId" ColumnName="StockId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,7 +12,7 @@ namespace SWE30010_Group04_WebApplication.Controllers
 {
     public class ProductsController : Controller
     {
-        private SWE30010_Group04_DBEntities2 db = new SWE30010_Group04_DBEntities2();
+        private SWE30010_Group04_DBEntities4 db = new SWE30010_Group04_DBEntities4();
 
         // GET: Products
         public ActionResult Index()
@@ -46,7 +46,7 @@ namespace SWE30010_Group04_WebApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,ProductName")] Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,Price")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace SWE30010_Group04_WebApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price")] Product product)
         {
             if (ModelState.IsValid)
             {

@@ -26,17 +26,17 @@ VALUES ([Username], [FirstName], [LastName], [Password]);
 
 MERGE INTO [Product] AS Target USING (
    VALUES
-   ( 1, 'Hemmorhoid Cream'),
-   ( 2, 'Aussie Butt Cream'),
-   ( 3, 'Genital Shampoo'),
-   ( 4, 'Deep Heat' ),
-   ( 5, 'Adult Diapers' )
+   ( 1, 'Hemmorhoid Cream', 11.99 ),
+   ( 2, 'Aussie Butt Cream' , 14.99),
+   ( 3, 'Genital Shampoo', 35.99),
+   ( 4, 'Deep Heat', 9.99 ),
+   ( 5, 'Adult Diapers', 24.99 )
 )
-AS Source ([ProductId], [ProductName])
+AS Source ([ProductId], [ProductName], [Price])
 ON Target.ProductId = Source.ProductId
 WHEN NOT MATCHED BY TARGET THEN
-INSERT ([ProductName])
-VALUES ([ProductName]);
+INSERT ([ProductName], [Price])
+VALUES ([ProductName], [Price]);
 
 MERGE INTO [Stock] AS Target USING (
    VALUES

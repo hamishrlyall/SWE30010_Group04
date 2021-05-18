@@ -14,17 +14,11 @@ namespace SWE30010_Group04_WebApplication.Models
     
     public partial class Stock
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Stock()
-        {
-            this.SaleItems = new HashSet<SaleItem>();
-        }
-    
         public int StockId { get; set; }
         public int ProductId { get; set; }
+        public Nullable<int> SaleId { get; set; }
     
         public virtual Product Product { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SaleItem> SaleItems { get; set; }
+        public virtual Sale Sale { get; set; }
     }
 }

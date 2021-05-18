@@ -4,16 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ed88d158317b4f0fa4b45dacfe97d31e" Name="Diagram1">
-        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Employee" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Product" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Sale" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.SaleItem" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Stock" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="8aee8f0157f34c1ea1ca5154a9b3a623" Name="Diagram1">
+        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Employee" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Product" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Sale" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SWE30010_Group04_DBModel.Stock" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="SWE30010_Group04_DBModel.FK_Sale_EmployeeId" ManuallyRouted="false" />
         <AssociationConnector Association="SWE30010_Group04_DBModel.FK_Stock_ProductId" ManuallyRouted="false" />
-        <AssociationConnector Association="SWE30010_Group04_DBModel.FK_SaleItem_SaleId" ManuallyRouted="false" />
-        <AssociationConnector Association="SWE30010_Group04_DBModel.FK_SaleItem_StockId" ManuallyRouted="false" />
+        <AssociationConnector Association="SWE30010_Group04_DBModel.FK_Sale_SaleId" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

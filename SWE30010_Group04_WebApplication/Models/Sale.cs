@@ -17,14 +17,17 @@ namespace SWE30010_Group04_WebApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Sale()
         {
-            this.SaleItems = new HashSet<SaleItem>();
+            this.Stocks = new List<Stock>();
         }
     
         public int SaleId { get; set; }
         public int EmployeeId { get; set; }
+        public decimal Total { get; set; }
     
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SaleItem> SaleItems { get; set; }
+        public virtual IList<Stock> Stocks { get; set; }
+
+        public virtual Product Product { get; set; }
     }
 }

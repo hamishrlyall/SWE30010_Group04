@@ -13,10 +13,10 @@ namespace SWE30010_Group04_WebApplication.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SWE30010_Group04_DBEntities2 : DbContext
+    public partial class SWE30010_Group04_DBEntities4 : DbContext
     {
-        public SWE30010_Group04_DBEntities2()
-            : base("name=SWE30010_Group04_DBEntities2")
+        public SWE30010_Group04_DBEntities4()
+            : base("name=SWE30010_Group04_DBEntities4")
         {
         }
     
@@ -24,11 +24,15 @@ namespace SWE30010_Group04_WebApplication.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+        
+        public virtual Stock Stock { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Sale Sale { get; set; }
+
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
-        public virtual DbSet<SaleItem> SaleItems { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
     }
 }

@@ -145,9 +145,6 @@
     <Compile Include="Models\Sale.cs">
       <DependentUpon>SWE30010_Group04_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SaleItem.cs">
-      <DependentUpon>SWE30010_Group04_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Stock.cs">
       <DependentUpon>SWE30010_Group04_Model.tt</DependentUpon>
     </Compile>

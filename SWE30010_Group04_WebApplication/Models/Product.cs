@@ -22,6 +22,7 @@ namespace SWE30010_Group04_WebApplication.Models
     
         public int ProductId { get; set; }
         public string ProductName { get; set; }
+        public decimal Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stock> Stocks { get; set; }

@@ -12,7 +12,7 @@ namespace SWE30010_Group04_WebApplication.Controllers
 {
     public class StocksController : Controller
     {
-        private SWE30010_Group04_DBEntities2 db = new SWE30010_Group04_DBEntities2();
+        private SWE30010_Group04_DBEntities4 db = new SWE30010_Group04_DBEntities4();
 
         // GET: Stocks
         public ActionResult Index()
